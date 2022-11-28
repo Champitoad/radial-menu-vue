@@ -220,7 +220,10 @@
         <button @click="openMenu">Open Menu</button>
         <button @click="closeMenu">Close Menu</button>
         <button @click="addItem">Add Item</button>
-        <RadialMenu ref="radialMenu" @clicked="menuClicked" @closed="onClosed" :menu-items="menuItems" :size="400" close-on-click></RadialMenu>
+        <div id="workspace" @contextmenu="openMenu">
+            <RadialMenu ref="radialMenu" :style="{ top: menuY + 'px', left: menuX + 'px' }" @clicked="menuClicked" @closed="onClosed"
+            :menu-items="menuItems" :size="menuSize" close-on-click></RadialMenu>
+        </div>
     </div>
 </template>
 
@@ -329,6 +332,9 @@ export default {
     name: 'app',
     data: function () {
         return {
+            menuX: 0,
+            menuY: 0,
+            menuSize: 400,
             menuItems: menuItems,
             menuIcons: [],
         }
@@ -337,9 +343,12 @@ export default {
         menuClicked: function (menuItem) {
             console.log('Menu item click:', menuItem.id);
         },
-        openMenu: function () {
+        openMenu: function (e) {
             this.addItem("wand", "wand-magic-sparkles", "Magic wand");
+            this.menuX = e.clientX - (this.menuSize / 2);
+            this.menuY = e.clientY - (this.menuSize / 2);
             this.$refs.radialMenu.open();
+            e.preventDefault();
         },
         closeMenu: function () {
             this.$refs.radialMenu.close();
@@ -401,6 +410,11 @@ div.info * {
 
 body .menu-icon {
     display: none;
+}
+
+#workspace {
+    width: 100%;
+    height: 800px;
 }
 
 </style>

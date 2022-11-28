@@ -1,5 +1,5 @@
 div.radialMenu {
-    position: relative;
+    position: absolute;
     margin: 10px;
     user-select: none;
     -moz-user-select: none;
