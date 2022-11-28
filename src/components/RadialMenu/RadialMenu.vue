@@ -12,11 +12,11 @@
             <g @click="$_sectorClick"  @mouseover="$_sectorHover" :class="{sector: sector.id, dummy: !sector.id, selected: menu.selectedIndex == sector.itemIndex}" v-for="(sector, index) in menu.sectors" :data-id="sector.id" :data-index="index" :transform="sector.transform" :data-item-index="sector.itemIndex">
                 <path :d="sector.d"></path>
                 <text v-if="sector.title" text-anchor="middle" font-size="38%" :x="sector.centerX" :y="sector.centerY" :transform="sector.textTransform">{{sector.title}}</text>
-                <use v-if="sector.icon" :xlink:href="sector.icon" :x="sector.centerX" :y="sector.centerY" :transform="sector.useTransform" width="10" height="10" fill="white"></use>
+                <use v-if="sector.icon" :href="sector.icon" :x="sector.centerX" :y="sector.centerY" :transform="sector.useTransform" width="10" height="10" fill="white"></use>
             </g>
             <g class="center" @click="$_centerClick">
                 <circle :r="menu.centerRadius"></circle>
-                <use :xlink:href="menu.centerIcon" :transform="menu.centerTransform" :width="menu.centerSize" :height="menu.centerSize"></use>
+                <use :href="menu.centerIcon" :transform="menu.centerTransform" :width="menu.centerSize" :height="menu.centerSize"></use>
             </g>
         </svg>
     </div>

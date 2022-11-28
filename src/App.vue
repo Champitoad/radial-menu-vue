@@ -210,13 +210,17 @@
 
             </symbol>
         </svg>
+
+        <div id="menuIcons"/>
+        
         <h1>Radial Menu Test</h1>
         <div class="info">
             <a target="_blank" href="https://github.com/axln/radial-menu-vue">https://github.com/axln/radial-menu-vue</a>
         </div>
         <button @click="openMenu">Open Menu</button>
         <button @click="closeMenu">Close Menu</button>
-        <RadialMenu ref="radialMenu" @clicked="menuClicked" :menu-items="menuItems" :size="400" close-on-click></RadialMenu>
+        <button @click="addItem">Add Item</button>
+        <RadialMenu ref="radialMenu" @clicked="menuClicked" @closed="onClosed" :menu-items="menuItems" :size="400" close-on-click></RadialMenu>
     </div>
 </template>
 
@@ -325,7 +329,8 @@ export default {
     name: 'app',
     data: function () {
         return {
-            menuItems: menuItems
+            menuItems: menuItems,
+            menuIcons: [],
         }
     },
     methods: {
@@ -333,15 +338,45 @@ export default {
             console.log('Menu item click:', menuItem.id);
         },
         openMenu: function () {
+            this.addItem("wand", "wand-magic-sparkles", "Magic wand");
             this.$refs.radialMenu.open();
         },
         closeMenu: function () {
             this.$refs.radialMenu.close();
+        },
+        onClosed: function () {
+            this.removeItem("wand");
+        },
+
+        addMenuIcon: function(faId) {
+            if (!this.menuIcons.includes(faId)) {
+                let icon = document.createElement("i");
+                icon.id = faId;
+                icon.classList.add("fa-solid");
+                icon.classList.add("fa-" + faId);
+                icon.classList.add("menu-icon");
+                document.getElementById("menuIcons").appendChild(icon);
+                this.menuIcons.push(faId);
+            }
+        },
+
+        addItem: function (id, faId, title) {
+            let item = {
+                id: id,
+                icon: '#' + faId,
+                title: title
+            };
+            this.menuItems.push(item);
+            this.addMenuIcon(faId);
+        },
+
+        removeItem: function(id) {
+            this.menuItems = this.menuItems.filter(item => item.id != id);
         }
   },
   components: {
       RadialMenu
-  }
+  },
 }
 </script>
 
@@ -364,5 +399,8 @@ div.info * {
 	text-shadow: 1px 1px 0 #000000D0;
 }
 
+body .menu-icon {
+    display: none;
+}
 
 </style>

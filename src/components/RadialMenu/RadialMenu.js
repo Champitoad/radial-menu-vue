@@ -142,6 +142,7 @@ export default {
                     this.isOpened = false;
                 });
                 currentMenu.inner = true;
+                this.$emit('closed');
             }
         },
 
